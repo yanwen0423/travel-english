@@ -306,6 +306,7 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
           'Content-Type': 'application/json',
           'x-api-key': apiKey,
           'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
         },
         body: JSON.stringify({
           model: model,
@@ -544,6 +545,7 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
           'Content-Type': 'application/json',
           'x-api-key': key,
           'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
         },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
