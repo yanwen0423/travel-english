@@ -140,55 +140,23 @@
 
       <div class="card settings-card">
         <h3>API 代理地址</h3>
-        <p class="settings-desc">由于浏览器 CORS 限制，无法直接调用 Anthropic API。你需要部署一个 Cloudflare Worker 代理，将地址填入下方。部署方法见下方说明。</p>
+        <p class="settings-desc">部署在 Vercel 上时，默认使用同域代理（/api），无需额外配置。如需自定义代理地址可在此修改。</p>
         <div class="input-row">
-          <input type="text" id="proxyUrlInput" placeholder="https://your-worker.your-subdomain.workers.dev" autocomplete="off">
+          <input type="text" id="proxyUrlInput" placeholder="/api（默认同域代理）" autocomplete="off">
         </div>
         <div class="settings-btn-row">
           <button class="btn btn-primary btn-sm" id="saveProxyBtn">保存</button>
         </div>
         <p class="settings-status" id="proxyStatus"></p>
         <details class="proxy-guide">
-          <summary>📖 如何部署 Cloudflare Worker 代理（免费，5分钟）</summary>
-          <ol>
-            <li>注册 <a href="https://dash.cloudflare.com/sign-up" target="_blank">Cloudflare 账号</a>（免费）</li>
-            <li>登录后进入 <a href="https://dash.cloudflare.com/?to=/:account/workers" target="_blank">Workers & Pages</a></li>
-            <li>点击 <strong>Create Worker</strong>，随意取个名字（如 <code>anthropic-proxy</code>）</li>
-            <li>将下方代码粘贴到编辑器中，替换默认代码，点击 <strong>Deploy</strong></li>
-            <li>部署成功后，复制你的 Worker URL（如 <code>https://anthropic-proxy.xxx.workers.dev</code>），填入上方输入框</li>
-          </ol>
-          <pre><code>export default {
-  async fetch(request) {
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, x-api-key, anthropic-version",
-        },
-      });
-    }
-    const url = new URL(request.url);
-    const targetUrl = "https://api.anthropic.com" + url.pathname;
-    const resp = await fetch(targetUrl, {
-      method: request.method,
-      headers: {
-        "Content-Type": request.headers.get("Content-Type"),
-        "x-api-key": request.headers.get("x-api-key"),
-        "anthropic-version": request.headers.get("anthropic-version"),
-      },
-      body: request.body,
-    });
-    const data = await resp.text();
-    return new Response(data, {
-      status: resp.status,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  },
-};</code></pre>
+          <summary>📖 关于 CORS 和代理</summary>
+          <p>由于浏览器安全策略（CORS），网页无法直接调用 api.anthropic.com。本站通过 Vercel Serverless Function 代理 API 请求，同域名无跨域问题。</p>
+          <p>如果你自行部署（如 GitHub Pages），需要设置自己的代理。推荐方案：</p>
+          <ul>
+            <li><strong>Vercel</strong>（推荐）：Fork 本项目后在 Vercel 导入，自动拥有代理</li>
+            <li><strong>Cloudflare Worker</strong>：创建 Worker 粘贴代理代码，将 URL 填入上方</li>
+            <li><strong>自建服务器</strong>：将 /api/v1/messages 请求转发到 api.anthropic.com</li>
+          </ul>
         </details>
       </div>
 
@@ -201,7 +169,7 @@
         <h3>关于</h3>
         <p>旅行翻译测验 — 每日中译英旅游翻译练习，由 Claude AI 生成题目并智能批改。</p>
         <p><strong>费用估算：</strong>批改1题约 500-1000 tokens，Sonnet 约 $0.005-0.01/题，Haiku 约 $0.001-0.003/题。</p>
-        <p><strong>隐私：</strong>API Key 仅存于浏览器 localStorage，仅发送至 api.anthropic.com，不经过任何第三方服务器。</p>
+        <p><strong>隐私：</strong>API Key 仅存于浏览器 localStorage，通过同域代理发送至 api.anthropic.com，代理不记录任何数据。</p>
       </div>
     </section>
   </main>

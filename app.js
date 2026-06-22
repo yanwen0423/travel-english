@@ -16,9 +16,9 @@
 
   const DEFAULT_MODEL = 'claude-sonnet-4-6';
 
-  // API proxy base URL - change this if you deploy your own Cloudflare Worker proxy
-  // Default: use the public CORS proxy for simplicity
-  let API_PROXY_URL = lsGet('api-proxy-url') || '';
+  // API proxy base URL
+  // Priority: 1. user-configured proxy  2. same-origin /api/v1 (Vercel serverless)  3. direct API (likely CORS-blocked)
+  let API_PROXY_URL = lsGet('api-proxy-url') || '/api';
 
   const GRADING_SYSTEM_PROMPT = `You are an expert English-as-a-second-language teacher specializing in travel English. Grade the user's Chinese-to-English translation semantically, not just by exact word match.
 
