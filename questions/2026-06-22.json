@@ -1,0 +1,208 @@
+{
+  "date": "2026-06-22",
+  "difficulty": "intermediate",
+  "questions": [
+    {
+      "id": 1,
+      "category": "hotel",
+      "category_label_zh": "酒店住宿",
+      "chinese": "请问你们有没有明天晚上双人间的空房？如果有的话，含早餐的价格大概是多少？",
+      "reference_answers": [
+        "Do you have any double rooms available for tomorrow night? If so, what's the approximate price including breakfast?",
+        "Are there any double rooms free for tomorrow night? If you do, roughly how much would it be with breakfast included?"
+      ],
+      "key_phrases": [
+        { "chinese": "双人间", "english": "double room" },
+        { "chinese": "空房", "english": "vacancy / available room" },
+        { "chinese": "含早餐", "english": "including breakfast / with breakfast included" }
+      ],
+      "grading_focus": [
+        "correct room type vocabulary (double room, not double-bed room)",
+        "natural conditional structure with 'if so'",
+        "phrase 'including breakfast' or 'with breakfast included'"
+      ]
+    },
+    {
+      "id": 2,
+      "category": "dining",
+      "category_label_zh": "餐饮美食",
+      "chinese": "我对花生和海鲜过敏，能不能推荐一些完全没有这些食材的菜品？",
+      "reference_answers": [
+        "I'm allergic to peanuts and seafood. Could you recommend some dishes that don't contain any of these ingredients at all?",
+        "I have a peanut and seafood allergy. Can you suggest dishes that are completely free of those ingredients?"
+      ],
+      "key_phrases": [
+        { "chinese": "对...过敏", "english": "allergic to / have an allergy to" },
+        { "chinese": "完全没有这些食材", "english": "completely free of these ingredients" }
+      ],
+      "grading_focus": [
+        "correct allergy expression (allergic to, not allergy with)",
+        "use of 'completely free of' or 'don't contain any of'",
+        "polite request pattern for recommendations"
+      ]
+    },
+    {
+      "id": 3,
+      "category": "transport",
+      "category_label_zh": "交通出行",
+      "chinese": "请问去机场最快的方式是什么？我赶时间，航班三小时后就要起飞了。",
+      "reference_answers": [
+        "What's the fastest way to get to the airport? I'm in a hurry — my flight takes off in three hours.",
+        "Could you tell me the quickest way to the airport? I'm pressed for time; my flight departs in three hours."
+      ],
+      "key_phrases": [
+        { "chinese": "最快的方式", "english": "the fastest way / the quickest way" },
+        { "chinese": "赶时间", "english": "in a hurry / pressed for time" },
+        { "chinese": "起飞", "english": "takes off / departs" }
+      ],
+      "grading_focus": [
+        "superlative form 'fastest/quickest'",
+        "natural expression of urgency 'in a hurry / pressed for time'",
+        "future tense for flight departure"
+      ]
+    },
+    {
+      "id": 4,
+      "category": "shopping",
+      "category_label_zh": "购物消费",
+      "chinese": "这件衣服能不能退税？如果可以的话，需要我填写什么表格吗？",
+      "reference_answers": [
+        "Can I get a tax refund on this item? If so, do I need to fill out any forms?",
+        "Is this item eligible for a tax refund? If yes, are there any forms I need to fill in?"
+      ],
+      "key_phrases": [
+        { "chinese": "退税", "english": "tax refund / tax-free shopping" },
+        { "chinese": "填写表格", "english": "fill out a form / fill in a form" }
+      ],
+      "grading_focus": [
+        "correct tax refund terminology",
+        "conditional 'if so' or 'if yes' linking",
+        "fill out vs fill in (both acceptable in different dialects)"
+      ]
+    },
+    {
+      "id": 5,
+      "category": "directions",
+      "category_label_zh": "问路指路",
+      "chinese": "不好意思，我好像迷路了。请问博物馆应该往哪个方向走？离这里大概多远？",
+      "reference_answers": [
+        "Excuse me, I think I'm lost. Which direction should I go to get to the museum? About how far is it from here?",
+        "Sorry, I seem to have gotten lost. Could you point me toward the museum? Roughly how far away is it?"
+      ],
+      "key_phrases": [
+        { "chinese": "迷路了", "english": "lost / gotten lost" },
+        { "chinese": "往哪个方向", "english": "which direction / point me toward" },
+        { "chinese": "大概多远", "english": "about how far / roughly how far" }
+      ],
+      "grading_focus": [
+        "natural way to express being lost ('I'm lost' not 'I lose way')",
+        "directional question formation",
+        "distance inquiry with 'about/roughly how far'"
+      ]
+    },
+    {
+      "id": 6,
+      "category": "emergency",
+      "category_label_zh": "紧急情况",
+      "chinese": "我的护照和钱包在地铁上被偷了，请问最近的警察局在哪里？我需要报案。",
+      "reference_answers": [
+        "My passport and wallet were stolen on the subway. Where is the nearest police station? I need to file a report.",
+        "I had my passport and wallet stolen on the metro. Could you tell me where the closest police station is? I need to report the theft."
+      ],
+      "key_phrases": [
+        { "chinese": "被偷了", "english": "was/were stolen / had something stolen" },
+        { "chinese": "报案", "english": "file a report / report the theft" }
+      ],
+      "grading_focus": [
+        "passive voice for theft ('was stolen', not 'is stolen')",
+        "'file a report' as the correct colocation",
+        "superlative 'nearest/closest' for police station"
+      ]
+    },
+    {
+      "id": 7,
+      "category": "sightseeing",
+      "category_label_zh": "观光游览",
+      "chinese": "请问这个景点有没有中文导游服务？如果没有的话，有语音导览器可以租吗？",
+      "reference_answers": [
+        "Is there a Chinese-speaking tour guide available at this attraction? If not, can I rent an audio guide?",
+        "Do you offer guided tours in Chinese at this site? If not, are audio guides available to rent?"
+      ],
+      "key_phrases": [
+        { "chinese": "中文导游", "english": "Chinese-speaking tour guide / guided tour in Chinese" },
+        { "chinese": "语音导览器", "english": "audio guide" },
+        { "chinese": "租", "english": "rent / hire" }
+      ],
+      "grading_focus": [
+        "'Chinese-speaking guide' not 'Chinese guide' (avoid ambiguity)",
+        "conditional linking 'if not'",
+        "audio guide vs audio tour terminology"
+      ]
+    },
+    {
+      "id": 8,
+      "category": "customs",
+      "category_label_zh": "海关入境",
+      "chinese": "我带了两瓶酒和一条烟，这些需要申报吗？还是说在免税额度以内就不用了？",
+      "reference_answers": [
+        "I'm carrying two bottles of wine and a carton of cigarettes. Do I need to declare these? Or is it fine if they're within the duty-free allowance?",
+        "I have two bottles of liquor and a carton of cigarettes with me. Do these need to be declared, or is it okay as long as they fall under the duty-free limit?"
+      ],
+      "key_phrases": [
+        { "chinese": "申报", "english": "declare / make a declaration" },
+        { "chinese": "免税额度", "english": "duty-free allowance / duty-free limit" },
+        { "chinese": "一条烟", "english": "a carton of cigarettes" }
+      ],
+      "grading_focus": [
+        "'declare' as customs-specific vocabulary",
+        "'duty-free allowance/limit' as correct term",
+        "carton (not 'one line of cigarettes')"
+      ]
+    },
+    {
+      "id": 9,
+      "category": "medical",
+      "category_label_zh": "医疗健康",
+      "chinese": "我已经持续发烧两天了，还伴有头痛和嗓子疼，想预约一个门诊看看。",
+      "reference_answers": [
+        "I've been running a fever for two days now, along with a headache and sore throat. I'd like to make an appointment for an outpatient visit.",
+        "I've had a persistent fever for two days, accompanied by a headache and sore throat. I want to book a clinic appointment."
+      ],
+      "key_phrases": [
+        { "chinese": "持续发烧", "english": "running a fever / persistent fever" },
+        { "chinese": "伴有", "english": "along with / accompanied by" },
+        { "chinese": "预约门诊", "english": "make an appointment / book a clinic appointment" }
+      ],
+      "grading_focus": [
+        "present perfect continuous 'have been running'",
+        "'accompanied by' or 'along with' for symptoms",
+        "'make an appointment' (not 'reserve a doctor')"
+      ]
+    },
+    {
+      "id": 10,
+      "category": "social",
+      "category_label_zh": "社交礼仪",
+      "chinese": "非常感谢您的热情款待，我很荣幸能参加这次晚宴。如果将来有机会来中国，请一定让我做东。",
+      "reference_answers": [
+        "Thank you so much for your warm hospitality. It's been a great honor to attend this dinner. If you ever have the chance to visit China, please let me host you.",
+        "I really appreciate your generous hospitality. It's an honor to be at this dinner. If you ever come to China, I'd love to return the favor and be your host."
+      ],
+      "key_phrases": [
+        { "chinese": "热情款待", "english": "warm hospitality / generous hospitality" },
+        { "chinese": "很荣幸", "english": "a great honor / an honor" },
+        { "chinese": "做东", "english": "host you / return the favor" }
+      ],
+      "grading_focus": [
+        "'hospitality' not 'entertainment' for hosting",
+        "'It's an honor' (not 'I'm honored' is also fine, check article usage)",
+        "'let me host you' or 'return the favor' for 做东"
+      ]
+    }
+  ],
+  "metadata": {
+    "model": "claude-sonnet-4-6",
+    "generated_at": "2026-06-21T16:15:00Z",
+    "total_questions": 10
+  }
+}

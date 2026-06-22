@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旅行翻译测验 | Travel Translation Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <h1 class="app-title">✈️ 旅行翻译测验</h1>
+      <nav class="nav-tabs">
+        <a href="#quiz" class="nav-tab active" data-view="quiz">今日测验</a>
+        <a href="#history" class="nav-tab" data-view="history">历史记录</a>
+        <a href="#settings" class="nav-tab" data-view="settings">设置</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="切换主题">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- View: Today's Quiz -->
+    <section id="view-quiz" class="view active">
+      <div class="quiz-header">
+        <span class="quiz-date" id="quizDate"></span>
+        <span class="quiz-progress" id="quizProgress">0/0 已完成</span>
+      </div>
+
+      <!-- Unavailable message -->
+      <div class="card unavailable-card" id="unavailableCard" style="display:none;">
+        <div class="unavailable-icon">📭</div>
+        <p>今日题目尚未生成，请稍后再来。</p>
+        <button class="btn btn-secondary" id="retryBtn">重新加载</button>
+      </div>
+
+      <!-- Question card -->
+      <div class="card question-card" id="questionCard" style="display:none;">
+        <div class="question-top">
+          <span class="category-tag" id="categoryTag"></span>
+          <span class="question-number" id="questionNumber"></span>
+        </div>
+        <div class="chinese-sentence" id="chineseSentence"></div>
+        <div class="input-area">
+          <label for="answerInput">你的翻译：</label>
+          <textarea id="answerInput" rows="4" placeholder="Type your English translation here..."></textarea>
+        </div>
+        <div class="question-actions">
+          <button class="btn btn-primary" id="gradeBtn" disabled>
+            <span class="btn-text">批改</span>
+            <span class="spinner" style="display:none;"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grading result -->
+      <div class="card grade-card" id="gradeCard" style="display:none;">
+        <div class="grade-header">
+          <span class="grade-badge" id="gradeBadge"></span>
+          <span class="grade-score" id="gradeScore"></span>
+        </div>
+        <div class="grade-sections">
+          <div class="grade-section">
+            <h4>📝 语法</h4>
+            <p id="grammarFeedback"></p>
+          </div>
+          <div class="grade-section">
+            <h4>📖 用词</h4>
+            <p id="vocabularyFeedback"></p>
+          </div>
+          <div class="grade-section">
+            <h4>✨ 风格</h4>
+            <p id="styleFeedback"></p>
+          </div>
+          <div class="grade-section">
+            <h4>🔑 关键短语</h4>
+            <div id="phraseAnalysis"></div>
+          </div>
+          <div class="grade-section improved-section">
+            <h4>💡 改进翻译</h4>
+            <p id="improvedTranslation"></p>
+          </div>
+          <div class="grade-section">
+            <h4>✅ 参考答案</h4>
+            <div id="referenceAnswers"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question navigation -->
+      <div class="question-nav" id="questionNav" style="display:none;">
+        <button class="btn btn-secondary" id="prevBtn" disabled>上一题</button>
+        <div class="question-dots" id="questionDots"></div>
+        <button class="btn btn-secondary" id="nextBtn">下一题</button>
+      </div>
+    </section>
+
+    <!-- View: History -->
+    <section id="view-history" class="view">
+      <h2 class="view-title">📋 历史记录</h2>
+      <div id="historyEmpty" class="empty-state">
+        <p>还没有任何记录，完成今天的测验吧！</p>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <div class="history-actions">
+        <button class="btn btn-secondary" id="exportBtn">📤 导出记录</button>
+      </div>
+    </section>
+
+    <!-- View: Settings -->
+    <section id="view-settings" class="view">
+      <h2 class="view-title">⚙️ 设置</h2>
+
+      <div class="card settings-card">
+        <h3>Anthropic API Key</h3>
+        <p class="settings-desc">用于智能批改。密钥仅存储在浏览器 localStorage 中，仅发送至 api.anthropic.com。</p>
+        <div class="input-row">
+          <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off">
+          <button class="btn btn-secondary btn-sm" id="toggleKeyBtn">👁️</button>
+        </div>
+        <div class="settings-btn-row">
+          <button class="btn btn-secondary btn-sm" id="testKeyBtn">测试密钥</button>
+          <button class="btn btn-primary btn-sm" id="saveKeyBtn">保存</button>
+        </div>
+        <p class="settings-status" id="keyStatus"></p>
+      </div>
+
+      <div class="card settings-card">
+        <h3>批改模型</h3>
+        <p class="settings-desc">影响批改质量和费用。</p>
+        <select id="modelSelect">
+          <option value="claude-sonnet-4-6">Claude Sonnet 4.6（推荐，性价比高）</option>
+          <option value="claude-haiku-4-5">Claude Haiku 4.5（最便宜）</option>
+          <option value="claude-opus-4-8">Claude Opus 4.8（最高质量，最贵）</option>
+        </select>
+      </div>
+
+      <div class="card settings-card">
+        <h3>数据管理</h3>
+        <button class="btn btn-danger btn-sm" id="clearHistoryBtn">清空所有历史记录</button>
+      </div>
+
+      <div class="card settings-card about-card">
+        <h3>关于</h3>
+        <p>旅行翻译测验 — 每日中译英旅游翻译练习，由 Claude AI 生成题目并智能批改。</p>
+        <p><strong>费用估算：</strong>批改1题约 500-1000 tokens，Sonnet 约 $0.005-0.01/题，Haiku 约 $0.001-0.003/题。</p>
+        <p><strong>隐私：</strong>API Key 仅存于浏览器 localStorage，仅发送至 api.anthropic.com，不经过任何第三方服务器。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>旅行翻译测验 © 2026 · Powered by Claude AI</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
