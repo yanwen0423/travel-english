@@ -16,6 +16,10 @@
 
   const DEFAULT_MODEL = 'claude-sonnet-4-6';
 
+  // API proxy base URL - change this if you deploy your own Cloudflare Worker proxy
+  // Default: use the public CORS proxy for simplicity
+  let API_PROXY_URL = lsGet('api-proxy-url') || '';
+
   const GRADING_SYSTEM_PROMPT = `You are an expert English-as-a-second-language teacher specializing in travel English. Grade the user's Chinese-to-English translation semantically, not just by exact word match.
 
 Evaluate based on:
@@ -300,13 +304,14 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
 **User's translation:** ${userAnswer}`;
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      // Determine API endpoint - use proxy if configured, otherwise direct
+      const apiBase = API_PROXY_URL || 'https://api.anthropic.com';
+      const response = await fetch(`${apiBase}/v1/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': apiKey,
           'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true',
         },
         body: JSON.stringify({
           model: model,
@@ -523,6 +528,10 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
     const model = lsGet(LS_KEYS.model) || DEFAULT_MODEL;
     $('#modelSelect').value = model;
     $('#keyStatus').textContent = '';
+
+    const proxyUrl = lsGet('api-proxy-url') || '';
+    $('#proxyUrlInput').value = proxyUrl;
+    $('#proxyStatus').textContent = '';
   }
 
   async function testApiKey() {
@@ -538,14 +547,13 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
     status.className = 'settings-status';
 
     try {
-      // Use a minimal messages call to test
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      const apiBase = API_PROXY_URL || 'https://api.anthropic.com';
+      const resp = await fetch(`${apiBase}/v1/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': key,
           'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true',
         },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
@@ -600,6 +608,21 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
     lsSet(LS_KEYS.model, $('#modelSelect').value);
   }
 
+  function saveProxyUrl() {
+    const url = $('#proxyUrlInput').value.trim().replace(/\/+$/, '');
+    lsSet('api-proxy-url', url);
+    // Update the runtime proxy URL
+    API_PROXY_URL = url;
+    const status = $('#proxyStatus');
+    if (url) {
+      status.textContent = '✅ 已保存';
+      status.className = 'settings-status success';
+    } else {
+      status.textContent = '已清除（将尝试直连 API，可能因 CORS 失败）';
+      status.className = 'settings-status';
+    }
+  }
+
   function clearAllHistory() {
     if (!confirm('确定要清空所有历史记录吗？此操作不可撤销。')) return;
     localStorage.removeItem(LS_KEYS.history);
@@ -652,6 +675,7 @@ ${q.grading_focus.map((f) => `- ${f}`).join('\n')}
     $('#testKeyBtn').addEventListener('click', testApiKey);
     $('#toggleKeyBtn').addEventListener('click', toggleKeyVisibility);
     $('#modelSelect').addEventListener('change', saveModel);
+    $('#saveProxyBtn').addEventListener('click', saveProxyUrl);
     $('#clearHistoryBtn').addEventListener('click', clearAllHistory);
 
     // Keyboard shortcut: Ctrl+Enter to grade
